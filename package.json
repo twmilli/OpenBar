@@ -1,0 +1,34 @@
+{
+  "name": "open-bar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel-register",
+    "build": "babel -d dist",
+    "serve": "nodemon index.js --exec babel-node",
+    "start": "NODE_ENV='production' node dist/index.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "fcc",
+    "ejs",
+    "nightlife"
+  ],
+  "author": "Taylor Milliman",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "node-sass-middleware": "^0.10.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "mocha": "^3.2.0",
+    "node-sass": "^4.1.1",
+    "nodemon": "^1.11.0"
+  }
+}

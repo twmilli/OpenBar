@@ -1,5 +1,5 @@
 # OpenBar
-Nightlife Coordination App
+Nightlife Coordination App <br/>
 IN PROGRESS
 
 User Stories:

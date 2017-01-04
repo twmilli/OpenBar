@@ -1,0 +1,88 @@
+$theme1: #ED5A5A;
+$theme2: #22394C;
+$theme3: #F8F4F4;
+@import url( 'https://fonts.googleapis.com/css?family=Lobster');
+
+body {
+    margin: 0;
+    background-color: $theme3;
+}
+
+.menu {
+    position: relative;
+    height: 70px;
+
+    .login {
+        margin-top: 10px;
+        position: absolute;
+        right: 2rem;
+        color: $theme2;
+        display: inline-block;
+    }
+
+    .nav-title {
+        font-size: 36px;
+        position: absolute;
+        margin-top: 10px;
+        left: 45%;
+        color: $theme1;
+        display: inline-block;
+        font-family: 'Lobster', cursive;
+        text-decoration: none;
+    }
+}
+
+.banner-img {
+    width: 100%;
+    height: 500px;
+}
+
+.search {
+  background-color: black;
+  width: 50%;
+  margin: auto;
+  border-radius: 5px;
+  color: $theme3;
+  font-size: 24px;
+  padding: 10px;
+  text-align: center;
+    .drop-btn {
+        background: none;
+        color: rgb(198, 198, 199);
+        font-size: 24px;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+
+        &:focus,
+        &:hover {
+          color: $theme3
+        }
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+display: none;
+position: absolute;
+background-color: #f9f9f9;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+}

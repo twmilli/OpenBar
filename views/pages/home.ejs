@@ -8,19 +8,29 @@
     <img src="/assets/bar.jpg" alt="" class="banner-img">
     <div class="search">
         Events within
+        <div class="dropdown">
         <button id='radius-btn' class='drop-btn'>50 miles</button>
         <div id="radius-dropdown" class="dropdown-content">
+          <a href="#">2 miles</a>
           <a href="#">5 miles</a>
           <a href="#">10 miles</a>
           <a href="#">25 miles</a>
-          <a href="#">50 miles</a>
-          <a href="#">100 miles</a>
+        </div>
         </div>
         of
-        <button id='radius-btn' class='drop-btn'>Durham, NH</button>
-        <div id="radius-dropdown" class="dropdown-content">
-          <input type="text" name="location" placeholder='location' value="">
+        <div class="dropdown">
+        <button id='location-btn' class='drop-btn'>Durham, NH</button>
+        <div id="location-dropdown" class="dropdown-content">
+          <input type="text" name="location" id='location' class="dropdown-content" placeholder='City or Zipcode' value="">
         </div>
+        </div>
+    </div>
+
+    <div class="dashboard">
+      <% console.log(data) %>
+      <% for (var i=0; i <data.length; i++){ %>
+        <img class="" src="<%= data[i].image %>">
+      <% } %>
     </div>
   </body>
 

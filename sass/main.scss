@@ -86,7 +86,7 @@ body {
         }
 
         input{
-          
+
           border: black 3px solid;
           border-radius: 5px;
         }
@@ -95,4 +95,45 @@ body {
     .show {
         display: block;
     }
+}
+
+.dashboard{
+  width: 100%;
+  margin-left: 3%;
+}
+.event-wrapper{
+  border: 3px solid $theme2;
+  border-radius: 5px;
+  display: inline-block;
+  width: 20%;
+  margin-top: 10px;
+  padding:  5px 10px 5px 10px;
+  &:hover{
+    background-color: #cfcfcf;
+    cursor: pointer;
+  }
+
+  h2{
+    height: 50px;
+    margin: 0;
+    color: $theme2;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  img{
+    width: 100%;
+  }
+
+  button{
+    width: 100%;
+    border: none;
+    background-color: $theme1;
+    color: $theme3;
+    &:hover{
+      background-color: $theme1 + 50;
+      cursor: pointer;
+    }
+  }
 }

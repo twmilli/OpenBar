@@ -29,7 +29,13 @@
     <div class="dashboard">
       <% console.log(data) %>
       <% for (var i=0; i <data.length; i++){ %>
-        <img class="" src="<%= data[i].image %>">
+        <div class="event-wrapper">
+          <h2><%= data[i].name %></h2>
+          <a href="<%=data[i].url %>">
+            <img class="" src="<%= data[i].image %>">
+          </a>
+          <button>0 people going</button>
+        </div>
       <% } %>
     </div>
   </body>

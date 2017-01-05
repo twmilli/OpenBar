@@ -68,3 +68,35 @@ body {
       border-radius: 5px; }
   .search .show {
     display: block; }
+
+.dashboard {
+  width: 100%;
+  margin-left: 3%; }
+
+.event-wrapper {
+  border: 3px solid #22394C;
+  border-radius: 5px;
+  display: inline-block;
+  width: 20%;
+  margin-top: 10px;
+  padding: 5px 10px 5px 10px; }
+  .event-wrapper:hover {
+    background-color: #cfcfcf;
+    cursor: pointer; }
+  .event-wrapper h2 {
+    height: 50px;
+    margin: 0;
+    color: #22394C;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center; }
+  .event-wrapper img {
+    width: 100%; }
+  .event-wrapper button {
+    width: 100%;
+    border: none;
+    background-color: #ED5A5A;
+    color: #F8F4F4; }
+    .event-wrapper button:hover {
+      background-color: #ff8c8c;
+      cursor: pointer; }

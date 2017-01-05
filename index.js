@@ -11,7 +11,6 @@ app.use(
    sassMiddleware({
        src: path.join(__dirname, 'sass'),
        dest: __dirname + '/public/stylesheets',
-       debug: true,
        prefix:  '/stylesheets'
    })
 );

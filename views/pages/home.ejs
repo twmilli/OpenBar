@@ -9,37 +9,42 @@
     <div class="search">
         Events within
         <div class="dropdown">
-        <button id='radius-btn' class='drop-btn'>50 miles</button>
+        <button id='radius-btn' class='drop-btn'><%= miles %> miles</button>
         <div id="radius-dropdown" class="dropdown-content">
-          <a href="#">2 miles</a>
-          <a href="#">5 miles</a>
-          <a href="#">10 miles</a>
-          <a href="#">25 miles</a>
+          <form id='radius-form' method="post" action = "/location/<%= location %>">
+            <input type="text" class='hidden' id='new_radius' name="radius" value="">
+            <p data-value='2'>2 miles</p>
+            <p data-value='5'>5 miles</p>
+            <p data-value='10'>10 miles</p>
+            <p data-value='25'>25 miles</p>
+          </form>
         </div>
         </div>
         of
         <div class="dropdown">
-        <button id='location-btn' class='drop-btn'>Durham, NH</button>
+        <button id='location-btn' class='drop-btn'><%= location %> </button>
         <div id="location-dropdown" class="dropdown-content">
-          <input type="text" name="location" id='location' class="dropdown-content" placeholder='City or Zipcode' value="">
+          <form method="post" id="location-form" action="/radius/<%=miles %>">
+            <input type="text" name="location" id='location' class="dropdown-content" placeholder='City or Zipcode' value="">
+          </form>
         </div>
         </div>
     </div>
 
     <div class="dashboard">
-      <% console.log(data) %>
       <% for (var i=0; i <data.length; i++){ %>
         <div class="event-wrapper">
           <h2><%= data[i].name %></h2>
           <a href="<%=data[i].url %>">
             <img class="" src="<%= data[i].image %>">
           </a>
-          <button>0 people going</button>
+          <button onclick="window.location.href='/going/<%=data[i].name%>'"><%=data[i].going%> people going</button>
         </div>
       <% } %>
     </div>
   </body>
-
   <script src='/scripts/dropdown.js'>
+  </script>
+  <script src='/scripts/form_submit.js'>
   </script>
 </html>

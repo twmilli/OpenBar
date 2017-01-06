@@ -7,3 +7,4 @@ node_modules
 npm-debug.log
 public/assets
 YelpConfig.js
+GithubConfig.js

@@ -2,8 +2,6 @@ function openDropdown(e, id){
   document.getElementById(id).classList.toggle("show");
 }
 
-
-
 document.getElementById("radius-btn").addEventListener("click", openDropdown.bind(null,null,"radius-dropdown"));
 document.getElementById("location-btn").addEventListener("click", openDropdown.bind(null,null,"location-dropdown"));
 

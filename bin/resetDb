@@ -7,7 +7,6 @@ mongo.connect(process.env.MONGODB_URI, (err,db)=>{
     throw err;
   }
 
-  db.collection("places", function(err, collection){
-    collection.remove();
-  })
+  db.collection("places").drop();
+  db.close();
 }

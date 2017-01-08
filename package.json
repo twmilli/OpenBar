@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-register",
-    "build": "babel index.js -d dist",
-    "serve": "nodemon index.js --exec babel-node",
-    "start": "NODE_ENV='production' node dist/index.js"
+    "build": "babel lib -d dist",
+    "serve": "nodemon ./lib/index.js --exec babel-node",
+    "start": "NODE_ENV='production' node --inspect dist/index.js"
   },
   "keywords": [
     "node",

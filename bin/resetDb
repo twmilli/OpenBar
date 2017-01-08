@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var mongo = require("mongodb").MongoClient;
-console.log(process.env.MONGODB_URI);
 mongo.connect(process.env.MONGODB_URI, (err,db)=>{
   if (err){
     throw err;

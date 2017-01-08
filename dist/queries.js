@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getYelpData = getYelpData;
 exports.getLocation = getLocation;
 exports.pointToCity = pointToCity;
+exports.coreHelper = coreHelper;
 
 var _YelpConfig = require('./YelpConfig');
 
@@ -31,15 +32,15 @@ function getYelpData(location) {
     var yelp = new _yelp2.default(_YelpConfig2.default);
     var radius_filter = milesToMeters(radius);
     // See http://www.yelp.com/developers/documentation/v2/search_api
-    return yelp.search({
-        radius_filter: radius_filter,
-        location: location,
-        category_filter: 'bars'
+    return yelp.search({ radius_filter: radius_filter, location: location, category_filter: 'bars' }).catch(function (err) {
+        return console.log(err);
     });
 }
 
 function getLocation(ip) {
-    return _axios2.default.get('http://freegeoip.net/json/' + ip);
+    return _axios2.default.get('http://freegeoip.net/json/' + ip).catch(function (err) {
+        return console.log(err);
+    });
 }
 
 function pointToCity(lat, lon) {
@@ -50,7 +51,65 @@ function pointToCity(lat, lon) {
         formatter: null // 'gpx', 'string', ...
     };
     var geocoder = (0, _nodeGeocoder2.default)(options);
-    return geocoder.reverse({ lat: lat, lon: lon });
+    return geocoder.reverse({ lat: lat, lon: lon }).catch(function (err) {
+        return console.log(err);
+    });
+}
+
+function coreHelper(db, ip, user, res) {
+    var user_name = null;
+    if (user !== undefined) {
+        user = req.user.displayName;
+    }
+    getLocation(ip).then(function (response) {
+        var state = response.data.region_code;
+        var city = response.data.city;
+        getYelpData(response.data.zip_code).then(function (data) {
+            var going_promises = [];
+            data.businesses.forEach(function (bar, i) {
+                going_promises.push(db.collection("places").findOne({
+                    name: bar.name
+                }, {
+                    going: 1,
+                    people: 1
+                }).catch(function (err) {
+                    return console.log(err);
+                }));
+            });
+            Promise.all(going_promises).then(function (values) {
+                var reduced_data = [];
+                for (var i = 0; i < data.businesses.length; i++) {
+                    var bar = data.businesses[i];
+                    var going = 0;
+                    var user_going = false;
+                    if (values[i]) {
+                        going = values[i].going;
+                        if (user && values[i].people && values[i].people[user.displayName]) {
+                            user_going = values[i].people[user.displayName];
+                        }
+                    }
+                    reduced_data.push({
+                        name: bar.name,
+                        rating: bar.rating,
+                        url: bar.url,
+                        image: bar.image_url,
+                        going: going,
+                        user_going: user_going
+                    });
+                }
+                res.render('pages/home', {
+                    data: reduced_data,
+                    miles: "25",
+                    location: city + ", " + state,
+                    user: user_name
+                });
+            }).catch(function (err) {
+                console.error(err);
+            });
+        });
+    }).catch(function (err) {
+        return console.log(err);
+    });
 }
 
 function milesToMeters(miles) {

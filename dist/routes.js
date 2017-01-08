@@ -32,43 +32,8 @@ router.get('/', function (req, res) {
     } else {
         ip = "24.34.135.173";
     }
-    var db = req.db;
-    (0, _queries.getLocation)(ip).then(function (response) {
-        var state = response.data.region_code;
-        var city = response.data.city;
-        (0, _queries.getYelpData)(response.data.zip_code).then(function (data) {
-            var going_promises = [];
-            data.businesses.forEach(function (bar, i) {
-                going_promises.push(db.collection("places").findOne({
-                    name: bar.name
-                }, { going: 1, people: 1 }));
-            });
-            Promise.all(going_promises).then(function (values) {
-                var reduced_data = [];
-                for (var i = 0; i < data.businesses.length; i++) {
-                    var bar = data.businesses[i];
-                    var going = 0;
-                    var user_going = false;
-                    if (values[i]) {
-                        going = values[i].going;
-                        console.log(values[i]);
-                        if (req.user && values[i].people && values[i].people[req.user.displayName]) {
-                            user_going = values[i].people[req.user.displayName];
-                        }
-                    }
-                    reduced_data.push({ name: bar.name, rating: bar.rating, url: bar.url, image: bar.image_url, going: going, user_going: user_going });
-                }
-                res.render('pages/home', {
-                    data: reduced_data,
-                    miles: "25",
-                    location: city + ", " + state,
-                    user: user
-                });
-            }).catch(function (err) {
-                console.error(err);
-            });
-        });
-    });
+
+    (0, _queries.coreHelper)(req.db, ip, req.user, res);
 });
 
 router.post('/radius/:radius', function (req, res) {
@@ -107,17 +72,31 @@ router.get('/data/:location/:radius', function (req, res) {
             data.businesses.forEach(function (bar, i) {
                 going_promises.push(db.collection("places").findOne({
                     name: bar.name
-                }, { going: 1 }));
+                }, {
+                    going: 1,
+                    people: 1
+                }));
             });
             Promise.all(going_promises).then(function (values) {
                 var reduced_data = [];
                 for (var i = 0; i < data.businesses.length; i++) {
                     var bar = data.businesses[i];
                     var going = 0;
+                    var user_going = false;
                     if (values[i]) {
                         going = values[i].going;
+                        if (req.user && values[i].people && values[i].people[req.user.displayName]) {
+                            user_going = values[i].people[req.user.displayName];
+                        }
                     }
-                    reduced_data.push({ name: bar.name, rating: bar.rating, url: bar.url, image: bar.image_url, going: going });
+                    reduced_data.push({
+                        name: bar.name,
+                        rating: bar.rating,
+                        url: bar.url,
+                        image: bar.image_url,
+                        going: going,
+                        user_going: user_going
+                    });
                 }
                 res.render('pages/home', {
                     data: reduced_data,
@@ -125,7 +104,11 @@ router.get('/data/:location/:radius', function (req, res) {
                     location: loc_res[0].city + ", " + loc_res[0].administrativeLevels.level1short,
                     user: user
                 });
+            }).catch(function (err) {
+                return console.log(err);
             });
+        }).catch(function (err) {
+            return console.log(err);
         });
     }).catch(function (err) {
         console.error(err);
@@ -152,7 +135,9 @@ router.get('/going/:name', function (req, res) {
                     $set: {
                         people: user_obj
                     }
-                }, { upsert: true });
+                }, { upsert: true }).catch(function (err) {
+                    return console.log(err);
+                });
             } else {
                 user_obj[user] = true;
                 db.collection("places").update({
@@ -164,10 +149,13 @@ router.get('/going/:name', function (req, res) {
                     $set: {
                         people: user_obj
                     }
-                }, { upsert: true });
+                }, { upsert: true }).catch(function (err) {
+                    return console.log(err);
+                });
             }
-            console.log("EXITING /GOING");
             res.redirect('/');
+        }).catch(function (err) {
+            return console.log(err);
         });
     }
 });

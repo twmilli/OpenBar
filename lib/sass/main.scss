@@ -1,0 +1,165 @@
+$theme1: #ED5A5A;
+$theme2: #22394C;
+$theme3: #F8F4F4;
+@import url( 'https://fonts.googleapis.com/css?family=Lobster');
+
+body {
+    margin: 0;
+    background-color: $theme3;
+}
+
+.menu {
+    position: relative;
+    height: 70px;
+
+    .login {
+        font-size: 24px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 10px;
+        position: absolute;
+        right: 2rem;
+        color: $theme2;
+        display: inline-block;
+        &:hover{
+          color: rgb(129, 130, 130);
+        }
+    }
+
+    .logout{
+      @extend .login;
+      left: 2rem;
+    }
+
+    .nav-title {
+        font-size: 36px;
+        position: absolute;
+        margin-top: 10px;
+        left: 45%;
+        color: $theme1;
+        display: inline-block;
+        font-family: 'Lobster', cursive;
+        text-decoration: none;
+    }
+}
+
+.banner-img {
+    width: 100%;
+    height: 500px;
+}
+
+.search {
+    background-color: black;
+    width: 50%;
+    margin: auto;
+    border-radius: 5px;
+    color: $theme3;
+    font-size: 24px;
+    padding: 10px;
+    text-align: center;
+
+    .drop-btn {
+        background: none;
+        color: rgb(198, 198, 199);
+        font-size: 24px;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+
+        &:focus,
+        &:hover {
+            color: $theme3;
+        }
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        margin-top: 10px;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 100px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        p, h2, input{
+          font-size: 20px;
+          color: black;
+          padding: 5px 8px;
+          text-decoration: none;
+          display: block;
+        }
+
+        p:hover, input:hover{
+          background-color: #f1f1f1;
+        }
+
+        p:hover{
+          cursor: pointer;
+        }
+
+        input{
+          border: black 3px solid;
+          border-radius: 5px;
+        }
+    }
+    /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+    .show {
+        display: block;
+    }
+}
+
+.dashboard{
+  width: 100%;
+  margin-left: 3%;
+}
+.event-wrapper{
+  border: 3px solid $theme2;
+  border-radius: 5px;
+  display: inline-block;
+  width: 20%;
+  margin-top: 10px;
+  padding:  5px 10px 5px 10px;
+  &:hover{
+    background-color: #cfcfcf;
+    cursor: pointer;
+  }
+
+  &.going{
+    background-color: $theme1+100;
+  }
+
+  h2{
+    height: 50px;
+    margin: 0;
+    color: $theme2;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  img{
+    width: 100%;
+  }
+
+  button{
+    width: 100%;
+    border: none;
+    background-color: $theme1;
+    color: $theme3;
+    &:hover{
+      background-color: $theme1 + 50;
+      cursor: pointer;
+    }
+  }
+}
+
+.hidden{
+  visibility: hidden;
+  padding: 0;
+  line-height: 0;
+  height: 0;
+  margin: 0;
+}

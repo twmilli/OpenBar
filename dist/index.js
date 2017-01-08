@@ -68,9 +68,9 @@ _passport2.default.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 
-var callbackUrl = "http://localhost:3000/login/callback";
+var callbackURL = "http://localhost:3000/login/callback";
 if (process.env.NODE_ENV === 'production') {
-  callbackUrl = "https://open-bar.herokuapp.com/login/callback";
+  callbackURL = "https://open-bar.herokuapp.com/login/callback";
 }
 
 _passport2.default.use(new _passportGithub.Strategy({

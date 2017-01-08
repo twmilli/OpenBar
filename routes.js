@@ -113,13 +113,40 @@ router.get('/data/:location/:radius', (req, res) => {
 
 router.get('/going/:name', (req, res) => {
     var db = req.db;
-    db.collection("places").update({
-        name: req.params.name
-    }, {
-        $inc: {
-            going: 1
-        }
-    }, {upsert: true})
-    res.redirect('/');
+    var user = req.user;
+    if (user === undefined) {
+        res.redirect('/login');
+    } else {
+        user = user.displayName;
+        db.collection("places").findOne({name: req.params.name}).then(place => {
+            var user_obj = {};
+            if (place.people && (place.people[user] === true)) {
+                user_obj[user] = false;
+                db.collection("places").update({
+                    name: req.params.name
+                }, {
+                    $inc: {
+                        going: -1
+                    },
+                    $set: {
+                        people: user_obj
+                    }
+                }, {upsert: true})
+            } else {
+                user_obj[user] = true;
+                db.collection("places").update({
+                    name: req.params.name
+                }, {
+                    $inc: {
+                        going: 1
+                    },
+                    $set: {
+                        people: user_obj
+                    }
+                }, {upsert: true});
+            }
+            res.redirect('/');
+        });
+    }
 });
 export default router;

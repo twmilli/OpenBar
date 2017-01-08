@@ -31,14 +31,14 @@
         </div>
     </div>
 
-    <div class="dashboard">
+    <div id="dashboard" class="dashboard">
       <% for (var i=0; i <data.length; i++){ %>
         <div class="event-wrapper">
           <h2><%= data[i].name %></h2>
           <a href="<%=data[i].url %>">
             <img class="" src="<%= data[i].image %>">
           </a>
-          <button onclick="window.location.href='/going/<%=data[i].name%>'"><%=data[i].going%> people going</button>
+          <button class='url-btn' data-url="<%=data[i].name%>"><%=data[i].going%> people going </button>
         </div>
       <% } %>
     </div>
@@ -46,5 +46,8 @@
   <script src='/scripts/dropdown.js'>
   </script>
   <script src='/scripts/form_submit.js'>
+  </script>
+  <script type="text/javascript" src="/scripts/url_buttons.js">
+
   </script>
 </html>

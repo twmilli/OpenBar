@@ -59,7 +59,7 @@ function pointToCity(lat, lon) {
 function coreHelper(db, ip, user, res) {
     var user_name = null;
     if (user !== undefined) {
-        user = req.user.displayName;
+        user_name = user.displayName;
     }
     getLocation(ip).then(function (response) {
         var state = response.data.region_code;

@@ -69,7 +69,7 @@ _passport2.default.deserializeUser(function (obj, done) {
 });
 
 var callbackURL = "http://localhost:3000/login/callback";
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV == 'production') {
   callbackURL = "https://open-bar.herokuapp.com/login/callback";
 }
 
@@ -80,7 +80,6 @@ _passport2.default.use(new _passportGithub.Strategy({
 }, function (accessToken, refreshToken, profile, done) {
   // asynchronous verification, for effect...
   process.nextTick(function () {
-
     // To keep the example simple, the user's GitHub profile is returned to
     // represent the logged-in user.  In a typical application, you would want
     // to associate the GitHub account with a user record in your database,

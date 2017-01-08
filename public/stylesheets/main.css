@@ -92,6 +92,8 @@ body {
   .event-wrapper:hover {
     background-color: #cfcfcf;
     cursor: pointer; }
+  .event-wrapper.going {
+    background-color: #ffbebe; }
   .event-wrapper h2 {
     height: 50px;
     margin: 0;

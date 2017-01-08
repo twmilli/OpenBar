@@ -25,17 +25,22 @@ router.get('/', (req, res) => {
             (data.businesses).forEach((bar, i) => {
                 going_promises.push(db.collection("places").findOne({
                     name: bar.name
-                }, {going: 1}));
+                }, {going: 1, people: 1}));
             });
             Promise.all(going_promises).then(values => {
                 var reduced_data = [];
                 for (var i = 0; i < data.businesses.length; i++) {
                     var bar = data.businesses[i];
                     var going = 0;
+                    var user_going = false
                     if (values[i]) {
                         going = values[i].going;
+                        console.log(values[i]);
+                        if (req.user && values[i].people && values[i].people[req.user.displayName]){
+                          user_going = values[i].people[req.user.displayName];
+                        }
                     }
-                    reduced_data.push({name: bar.name, rating: bar.rating, url: bar.url, image: bar.image_url, going});
+                    reduced_data.push({name: bar.name, rating: bar.rating, url: bar.url, image: bar.image_url, going, user_going});
                 }
                 res.render('pages/home', {
                     data: reduced_data,
@@ -120,7 +125,7 @@ router.get('/going/:name', (req, res) => {
         user = user.displayName;
         db.collection("places").findOne({name: req.params.name}).then(place => {
             var user_obj = {};
-            if (place.people && (place.people[user] === true)) {
+            if (place && place.people && (place.people[user] === true)) {
                 user_obj[user] = false;
                 db.collection("places").update({
                     name: req.params.name
@@ -145,6 +150,7 @@ router.get('/going/:name', (req, res) => {
                     }
                 }, {upsert: true});
             }
+            console.log("EXITING /GOING")
             res.redirect('/');
         });
     }

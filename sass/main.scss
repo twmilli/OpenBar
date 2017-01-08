@@ -127,6 +127,10 @@ body {
     cursor: pointer;
   }
 
+  &.going{
+    background-color: $theme1+100;
+  }
+
   h2{
     height: 50px;
     margin: 0;

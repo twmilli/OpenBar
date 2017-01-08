@@ -32,13 +32,27 @@
     </div>
 
     <div id="dashboard" class="dashboard">
-      <% for (var i=0; i <data.length; i++){ %>
-        <div class="event-wrapper">
+      <% for (var i=0; i <data.length; i++){
+        var going_class="";
+        if (data[i].user_going === true){
+          going_class = "going";
+        }%>
+
+
+        <div class="event-wrapper <%=going_class%>">
           <h2><%= data[i].name %></h2>
           <a href="<%=data[i].url %>">
             <img class="" src="<%= data[i].image %>">
           </a>
-          <button class='url-btn' data-url="<%=data[i].name%>"><%=data[i].going%> people going </button>
+
+          <%var noun;
+          if (data[i].going == 1){
+            noun = "person";
+          }else{
+            noun = "people";
+          }%>
+
+          <button class='url-btn' data-url="<%=data[i].name%>"><%=data[i].going%> <%=noun%> going </button>
         </div>
       <% } %>
     </div>

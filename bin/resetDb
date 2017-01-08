@@ -8,5 +8,5 @@ mongo.connect(process.env.MONGODB_URI, (err,db)=>{
   }
 
   db.collection("places").drop();
-  db.close();
+  db.close()
 }

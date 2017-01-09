@@ -33,18 +33,18 @@
 
     <div id="dashboard" class="dashboard">
       <% for (var i=0; i <data.length; i++){
-        var going_class="";
+        var going_class="no";
+        var button_text="Attend"
         if (data[i].user_going === true){
           going_class = "going";
+          button_text = "Unattend";
         }%>
-
-
-        <div class="event-wrapper <%=going_class%>">
+        <div class="event-wrapper">
           <h2><%= data[i].name %></h2>
+          <button data-url="<%=data[i].name%>" class=<%=going_class%>><%=button_text%></button>
           <a href="<%=data[i].url %>">
             <img class="" src="<%= data[i].image %>">
           </a>
-
           <%var noun;
           if (data[i].going == 1){
             noun = "person";
@@ -52,7 +52,7 @@
             noun = "people";
           }%>
 
-          <button class='url-btn' data-url="<%=data[i].name%>"><%=data[i].going%> <%=noun%> going </button>
+          <div class='people' data-url="<%=data[i].name%>"><%=data[i].going%> <%=noun%> attending </div>
         </div>
       <% } %>
     </div>

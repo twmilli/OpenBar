@@ -25,6 +25,10 @@ router.get('/', function (req, res) {
     var user = null;
     if (req.isAuthenticated()) {
         user = req.user.displayName;
+        if (req.user.radius) {
+            res.redirect('/data/' + req.user.location + '/' + req.user.radius);
+            return;
+        }
     }
     var ip;
     if (process.env.NODE_ENV === 'production') {
@@ -64,6 +68,8 @@ router.get('/data/:location/:radius', function (req, res) {
     var user = null;
     if (req.isAuthenticated()) {
         user = req.user.displayName;
+        req.user.radius = req.params.radius;
+        req.user.location = req.params.location;
     }
     (0, _queries.getYelpData)(req.params.location, req.params.radius).then(function (data) {
         var point = data.region.center;

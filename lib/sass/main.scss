@@ -132,7 +132,7 @@ body {
   }
 
   h2{
-    height: 50px;
+    height: 40px;
     margin: 0;
     color: $theme2;
     padding: 10px;
@@ -146,14 +146,36 @@ body {
 
   button{
     width: 100%;
+    padding: 6px;
+    font-size: 14px;
     border: none;
     background-color: $theme1;
     color: $theme3;
+    margin-bottom: 5px;
     &:hover{
       background-color: $theme1 + 50;
       cursor: pointer;
     }
+    &.no{
+      background-color: rgb(73, 150, 20);
+      &:hover{
+        background-color: rgb(123, 180, 84);
+        cursor: pointer;
+      }
+    }
   }
+
+  div{
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: $theme1;
+    color: $theme3;
+  }
+
+
 }
 
 .hidden{

@@ -36,6 +36,8 @@ router.get('/', function (req, res) {
     } else {
         ip = "24.34.135.173";
     }
+    res.cookie("location", undefined);
+    res.cookie("radius", undefined);
 
     (0, _queries.coreHelper)(req.db, ip, req.user, res);
 });

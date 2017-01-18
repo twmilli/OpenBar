@@ -38,6 +38,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mongo = require("mongodb").MongoClient;
 var url = process.env.MONGODB_URI;
+var MemoryStore = require('session-memory-store')(_expressSession2.default);
+var cookieParser = require("cookie-parser");
 
 var app = (0, _express2.default)();
 
@@ -90,12 +92,14 @@ _passport2.default.use(new _passportGithub.Strategy({
 
 app.use((0, _expressSession2.default)({
   cookieName: 'session',
+  store: new MemoryStore(),
   secret: 'random string',
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000
 }));
 app.use(_passport2.default.initialize());
 app.use(_passport2.default.session());
+app.use(cookieParser());
 
 mongo.connect(url, function (err, db) {
   if (err) {

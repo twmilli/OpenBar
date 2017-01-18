@@ -55,7 +55,11 @@ router.get('/login', _passport2.default.authenticate('github', { scope: ['user:e
 });
 
 router.get('/login/callback', _passport2.default.authenticate('github', { failureRedirect: '/login' }), function (req, res) {
-    res.redirect('/');
+    if (req.cookies.location) {
+        res.redirect('/data/' + req.cookies.location + '/' + req.cookies.radius);
+    } else {
+        res.redirect('/');
+    }
 });
 
 router.get('/logout', function (req, res) {
@@ -64,6 +68,8 @@ router.get('/logout', function (req, res) {
 });
 
 router.get('/data/:location/:radius', function (req, res) {
+    res.cookie("location", req.params.location);
+    res.cookie("radius", req.params.radius);
     var db = req.db;
     var user = null;
     if (req.isAuthenticated()) {

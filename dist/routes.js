@@ -25,8 +25,8 @@ router.get('/', function (req, res) {
     var user = null;
     if (req.isAuthenticated()) {
         user = req.user.displayName;
-        if (req.user.radius) {
-            res.redirect('/data/' + req.user.location + '/' + req.user.radius);
+        if (req.cookies.radius) {
+            res.redirect('/data/' + req.cookies.location + '/' + req.cookies.radius);
             return;
         }
     }

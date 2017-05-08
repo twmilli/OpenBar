@@ -24,9 +24,8 @@ var get_ip = require('ipware')().get_ip;
 router.get('/', function (req, res) {
     var user = null;
     if (req.isAuthenticated()) {
-        user = req.user.displayName;
-        if (req.cookies.radius) {
-            res.redirect('/data/' + req.cookies.location + '/' + req.cookies.radius);
+        if (req.user.radius && req.user.location) {
+            res.redirect('/data/' + req.user.location + '/' + req.user.radius);
             return;
         }
     }
@@ -36,8 +35,6 @@ router.get('/', function (req, res) {
     } else {
         ip = "24.34.135.173";
     }
-    res.cookie("location", undefined);
-    res.cookie("radius", undefined);
 
     (0, _queries.coreHelper)(req.db, ip, req.user, res);
 });
@@ -57,11 +54,7 @@ router.get('/login', _passport2.default.authenticate('github', { scope: ['user:e
 });
 
 router.get('/login/callback', _passport2.default.authenticate('github', { failureRedirect: '/login' }), function (req, res) {
-    if (req.cookies.location) {
-        res.redirect('/data/' + req.cookies.location + '/' + req.cookies.radius);
-    } else {
-        res.redirect('/');
-    }
+    res.redirect('/');
 });
 
 router.get('/logout', function (req, res) {
@@ -70,8 +63,6 @@ router.get('/logout', function (req, res) {
 });
 
 router.get('/data/:location/:radius', function (req, res) {
-    res.cookie("location", req.params.location);
-    res.cookie("radius", req.params.radius);
     var db = req.db;
     var user = null;
     if (req.isAuthenticated()) {
